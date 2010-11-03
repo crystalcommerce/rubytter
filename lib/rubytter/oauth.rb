@@ -6,6 +6,14 @@ class Rubytter
       @ca_file = ca_file
     end
 
+    def authorize_from_access(atoken, asecret)
+      @atoken, @asecret = atoken, asecret
+    end
+
+    def access_token
+      @access_token ||= ::OAuth::AccessToken.new(create_consumer, @atoken, @asecret)
+    end
+
     def get_access_token_with_xauth(login, password)
       consumer = create_consumer
       consumer.get_access_token(nil, {}, {
